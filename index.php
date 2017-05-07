@@ -2,7 +2,7 @@
 include 'header.php';
 ?>
     <!-- container -->
-    <div class="container-fluid">
+    <div class="container">
   
         <div class="page-header">
             <h1>View All Customers</h1>
@@ -20,7 +20,7 @@ if($action=='deleted'){
 }
  
 // select all data
-$query = "SELECT id, lastname, firstname, email, phone, address, city, zip FROM products ORDER BY id ASC";
+$query = "SELECT id, lastname, firstname, email, phone FROM products ORDER BY id ASC";
 $stmt = $con->prepare($query);
 $stmt->execute();
  
@@ -42,9 +42,6 @@ if($num>0){
             echo "<th>First Name</th>";
             echo "<th>Email</th>";
             echo "<th>Phone</th>";
-            echo "<th>Address</th>";
-            echo "<th>City</th>";
-            echo "<th>Zip</th>";
             echo "<th>Action</th>";
         echo "</tr>";
          
@@ -64,15 +61,14 @@ if($num>0){
                 echo "<td>{$firstname}</td>";
                 echo "<td>{$email}</td>";
                 echo "<td>{$phone}</td>";
-                echo "<td>{$address}</td>";
-                echo "<td>{$city}</td>";
-                echo "<td>{$zip}</td>";
                 echo "<td>";
                     // read one record 
                     echo "<a href='read_one.php?id={$id}' class='btn btn-info m-r-1em'>View</a>";
                      
                     // we will use this links on next part of this post
                     echo "<a href='update.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>";
+                    
+                    echo "<a href='measurements.php?id={$id}' class='btn btn-success m-r-1em'>Measurements</a>";
  
                     // we will use this links on next part of this post
                     echo "<a href='#' onclick='delete_user({$id});'  class='btn btn-danger'>Delete</a>";
