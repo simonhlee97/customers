@@ -6,7 +6,7 @@ $username = "simonhlee97";
 $password = "";
 $port = 3306;
 try {
-    $con = new PDO("mysql:host={$host};dbname={$db_name};port={$port}", $username, $password);
+    $con = new PDO('mysql:host={$host};dbname={$db_name};port={$port}', $username, $password);
 }
 // show error
 catch(PDOException $exception){
