@@ -7,5 +7,5 @@ $username = $url["b5458e0da66d5b"];
 $password = $url["cba72f57"];
 $db = substr($url["heroku_f131178ef9fabf6"], 1);
 
-$con = new mysqli($server, $username, $password, $db);
+$con = new mysqli($server, $username, $password, $db)or die(mysql_error());
 ?>
