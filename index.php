@@ -20,7 +20,7 @@ if($action=='deleted'){
 }
  
 // select all data
-$query = "SELECT id, lastname, firstname, email, phone FROM products ORDER BY id ASC";
+$query = "SELECT id, lastname, firstname, email, phone FROM customers ORDER BY id ASC";
 $stmt = $con->prepare($query);
 $stmt->execute();
  

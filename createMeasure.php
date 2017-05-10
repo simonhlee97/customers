@@ -6,31 +6,27 @@ include 'header.php';
     <div class="container">
   
         <div class="page-header">
-            <h1>Create New Customer</h1>
+            <h1>Enter New Measurements</h1>
         </div>
      
     <!-- dynamic content will be here -->
     <?php
 if($_POST){
- 
     // include database connection
     include 'database.php';
- 
     try{
  // insert query
-$query = "INSERT INTO customers
-            SET lastname=:lastname, firstname=:firstname, email=:email, phone=:phone, address=:address,
-                city=:city, zip=:zip, image=:image, created=:created";
+$query = "INSERT INTO measurements
+            SET chest=:chest, shoulder=:shoulder, neck=:neck,
+                created=:created";
  
 // prepare query for execution
 $stmt = $con->prepare($query);
 
-        $lastname=htmlspecialchars(strip_tags($_POST['lastname']));
-        $firstname=htmlspecialchars(strip_tags($_POST['firstname']));
-        $email=htmlspecialchars(strip_tags($_POST['email']));
-        $phone=htmlspecialchars(strip_tags($_POST['phone']));
-        $address=htmlspecialchars(strip_tags($_POST['address']));
-        $city=htmlspecialchars(strip_tags($_POST['city']));
+        $chest=htmlspecialchars(strip_tags($_POST['chest']));
+        $shoulder=htmlspecialchars(strip_tags($_POST['shoulder']));
+        $neck=htmlspecialchars(strip_tags($_POST['neck']));
+        
         $zip=htmlspecialchars(strip_tags($_POST['zip']));
  
 // new 'image' field
@@ -40,13 +36,9 @@ $image=!empty($_FILES["image"]["name"])
 $image=htmlspecialchars(strip_tags($image));
  
 // bind the parameters
-$stmt->bindParam(':lastname', $lastname);
-$stmt->bindParam(':firstname', $firstname);
-$stmt->bindParam(':email', $email);
-$stmt->bindParam(':phone', $phone);
-$stmt->bindParam(':address', $address);
-$stmt->bindParam(':city', $city);
-$stmt->bindParam(':zip', $zip);
+$stmt->bindParam(':chest', $chest);
+$stmt->bindParam(':shoulder', $shoulder);
+$stmt->bindParam(':neck', $neck);
 $stmt->bindParam(':image', $image);
  
 // specify when this record was inserted to the database
@@ -111,8 +103,7 @@ else{
         echo "<div>{$file_upload_error_messages}</div>";
         echo "<div>Update the record to upload photo.</div>";
     echo "</div>";
-}
-
+    }
         }
         }else{
             echo "<div class='alert alert-danger'>Unable to save record.</div>";
@@ -134,29 +125,18 @@ else{
             <td><input type='text' name='lastname' class='form-control' /></td>
         </tr>
         <tr>
-            <td>First Name</td>
-            <td><input type='text' name='firstname' class='form-control' /></td>
+            <td>chest</td>
+            <td><input type='text' name='chest' class='form-control' /></td>
         </tr>
         <tr>
-            <td>Email Name</td>
-            <td><input type='text' name='email' class='form-control' /></td>
+            <td>chest</td>
+            <td><input type='text' name='shoulder' class='form-control' /></td>
         </tr>
         <tr>
-            <td>Phone</td>
-            <td><input type='text' name='phone' class='form-control' /></td>
+            <td>neck</td>
+            <td><input type='text' name='neck' class='form-control' /></td>
         </tr>
-        <tr>
-            <td>Address</td>
-            <td><input type='text' name='address' class='form-control' /></td>
-        </tr>
-        <tr>
-            <td>City</td>
-            <td><input type='text' name='city' class='form-control' /></td>
-        </tr>
-        <tr>
-            <td>Zip</td>
-            <td><input type='text' name='zip' class='form-control' /></td>
-        </tr>
+        
         
         <tr>
             <td>Photo</td>

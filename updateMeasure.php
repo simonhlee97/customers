@@ -6,7 +6,7 @@ include 'header.php';
     <div class="container">
   
         <div class="page-header">
-            <h1>Edit Customer Contact Info</h1>
+            <h1>Customer Measurements - Edit</h1>
         </div>
      
 <!-- dynamic content will be here -->
@@ -21,7 +21,7 @@ include 'database.php';
 // read current record's data
 try {
     // prepare select query
-    $query = "SELECT id, lastname, firstname, email, phone, address, city, zip FROM customers WHERE id = ? LIMIT 0,1";
+    $query = "SELECT id, lastname, firstname, neck, shoulder, chest FROM customers WHERE id = ? LIMIT 0,1";
     $stmt = $con->prepare( $query );
      
     // this is the first question mark
@@ -36,11 +36,10 @@ try {
     // values to fill up our form
     $lastname = $row['lastname'];
     $firstname = $row['firstname'];
-    $email = $row['email'];
-    $phone = $row['phone'];
-    $address = $row['address'];
-    $city = $row['city'];
-    $zip = $row['zip'];
+    $neck = $row['neck'];
+    $shoulder = $row['shoulder'];
+    $chest = $row['chest'];
+    $image = htmlspecialchars($row['image'], ENT_QUOTES);
 }
  
 // show error
@@ -65,29 +64,23 @@ if($_POST){
         // in this case, it seemed like we have so many fields to pass and 
         // it is better to label them and not use question marks
         $query = "UPDATE customers 
-                    SET lastname=:lastname, firstname=:firstname, email=:email, phone=:phone, address=:address, city=:city, zip=:zip 
-                    WHERE id = :id";
+                    SET neck=:neck, shoulder=:shoulder, chest=:chest 
+                    WHERE id =:id";
  
         // prepare query for excecution
         $stmt = $con->prepare($query);
  
         // posted values
-        $lastname=htmlspecialchars(strip_tags($_POST['lastname']));
-        $firstname=htmlspecialchars(strip_tags($_POST['firstname']));
-        $email=htmlspecialchars(strip_tags($_POST['email']));
-        $phone=htmlspecialchars(strip_tags($_POST['phone']));
-        $address=htmlspecialchars(strip_tags($_POST['address']));
-        $city=htmlspecialchars(strip_tags($_POST['city']));
-        $zip=htmlspecialchars(strip_tags($_POST['zip']));
+        //$lastname=htmlspecialchars(strip_tags($_POST['lastname']));
+        //$firstname=htmlspecialchars(strip_tags($_POST['firstname']));
+        $neck=htmlspecialchars(strip_tags($_POST['neck']));
+        $shoulder=htmlspecialchars(strip_tags($_POST['shoulder']));
+        $chest=htmlspecialchars(strip_tags($_POST['chest']));
  
         // bind the parameters (should be same variables as posted values plus $id)
-        $stmt->bindParam(':lastname', $lastname);
-        $stmt->bindParam(':firstname', $firstname);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':phone', $phone);
-        $stmt->bindParam(':address', $address);
-        $stmt->bindParam(':city', $city);
-        $stmt->bindParam(':zip', $zip);
+        $stmt->bindParam(':neck', $neck);
+        $stmt->bindParam(':shoulder', $shoulder);
+        $stmt->bindParam(':chest', $chest);
         //$stmt->bindParam(':image', $image);
         $stmt->bindParam(':id', $id);
          
@@ -111,37 +104,39 @@ if($_POST){
     <table class='table table-hover table-responsive table-bordered'>
         <tr>
             <td>Last Name</td>
-            <td><input type='text' name='lastname' value="<?php echo htmlspecialchars($lastname, ENT_QUOTES);  ?>" class='form-control' /></td>
+            <td><?php echo htmlspecialchars($lastname, ENT_QUOTES);  ?></td>
         </tr>
         <tr>
             <td>First Name</td>
-            <td><input type='text' name='firstname' value="<?php echo htmlspecialchars($firstname, ENT_QUOTES);  ?>" class='form-control' /></td>
+            <td><?php echo htmlspecialchars($firstname, ENT_QUOTES);  ?></td>
         </tr>
         <tr>
-            <td>Email</td>
-            <td><input type='text' name='email' value="<?php echo htmlspecialchars($email, ENT_QUOTES);  ?>" class='form-control' /></td>
+            <td>Neck</td>
+            <td><input type='text' name='neck' value="<?php echo htmlspecialchars($neck, ENT_QUOTES);  ?>" class='form-control' /></td>
         </tr>
         <tr>
-            <td>Phone</td>
-            <td><input type='text' name='phone' value="<?php echo htmlspecialchars($phone, ENT_QUOTES);  ?>" class='form-control' /></td>
+            <td>Shoulder</td>
+            <td><input type='text' name='shoulder' value="<?php echo htmlspecialchars($shoulder, ENT_QUOTES);  ?>" class='form-control' /></td>
         </tr>
         <tr>
-            <td>Address</td>
-            <td><input type='text' name='address' value="<?php echo htmlspecialchars($address, ENT_QUOTES);  ?>" class='form-control' /></td>
+            <td>Chest</td>
+            <td><input type='text' name='chest' value="<?php echo htmlspecialchars($chest, ENT_QUOTES);  ?>" class='form-control' /></td>
         </tr>
         <tr>
-            <td>City</td>
-            <td><input type='text' name='city' value="<?php echo htmlspecialchars($city, ENT_QUOTES);  ?>" class='form-control' /></td>
-        </tr>
+        <td>Waist</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Hips</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Sleeve</td>
+        <td></td>
+    </tr>
         <tr>
-            <td>Zip</td>
-            <td><input type='text' name='zip'  value="<?php echo htmlspecialchars($zip, ENT_QUOTES);  ?>" class='form-control' /></td>
-        </tr>
-        
-        <tr>
-            <td></td>
+            <td><input type='submit' value='Save Changes' class='btn btn-primary' /></td>
             <td>
-                <input type='submit' value='Save Changes' class='btn btn-primary' />
                 <a href='index.php' class='btn btn-danger'>Back to All Customers</a>
             </td>
         </tr>

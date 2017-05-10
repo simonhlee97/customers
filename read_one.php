@@ -22,7 +22,9 @@ include 'database.php';
 // read current record's data
 try {
     // prepare select query
-    $query = "SELECT id, lastname, firstname, email, phone, address, city, zip FROM products WHERE id = ? LIMIT 0,1";
+    $query = "SELECT id, lastname, firstname, email, phone, address, city, zip 
+                FROM customers
+                WHERE id = ? LIMIT 0,1";
     $stmt = $con->prepare( $query );
  
     // this is the first question mark
@@ -88,6 +90,18 @@ catch(PDOException $exception){
         <td></td>
         <td>
             <a href='index.php' class='btn btn-danger'>Back to All Customers</a>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <?php echo "<a href='measurements.php?id={$id}' class='btn btn-success m-r-1em'>View Measurements</a>" ?>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <?php echo "<a href='orderhistory.php?id={$id}' class='btn btn-info m-r-1em'>Order History</a>" ?>
         </td>
     </tr>
 </table>

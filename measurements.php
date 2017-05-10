@@ -1,8 +1,6 @@
 <?php
 include 'header.php';
 ?>
- 
- 
     <!-- container -->
     <div class="container">
   
@@ -12,7 +10,7 @@ include 'header.php';
          
         <!-- dynamic content will be here -->
         <?php
-// get passed parameter value, in this case, the record ID
+// get passed parameter value, in this case, $id = measurements.id
 // isset() is a PHP function used to verify if a value is there or not
 $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
  
@@ -22,7 +20,7 @@ include 'database.php';
 // read current record's data
 try {
     // prepare select query
-    $query = "SELECT id, lastname, firstname, neck, shoulder, chest FROM measurements WHERE id = ? LIMIT 0,1";
+    $query = "SELECT id, lastname, firstname, neck, shoulder, chest FROM customers WHERE id = ? LIMIT 0,1";
     $stmt = $con->prepare( $query );
  
     // this is the first question mark
@@ -40,7 +38,6 @@ try {
     $neck = $row['neck'];
     $shoulder = $row['shoulder'];
     $chest = $row['chest'];
-    $image = htmlspecialchars($row['image'], ENT_QUOTES);
 }
  
 // show error
@@ -55,7 +52,7 @@ catch(PDOException $exception){
         <td><?php echo htmlspecialchars($lastname, ENT_QUOTES);  ?></td>
     </tr>
     <tr>
-        <td>First Name</td></td>
+        <td>First Name</td>
         <td><?php echo htmlspecialchars($firstname, ENT_QUOTES);  ?></td>
     </tr>
     <tr>
@@ -71,11 +68,19 @@ catch(PDOException $exception){
         <td><?php echo htmlspecialchars($chest, ENT_QUOTES);  ?></td>
     </tr>
     <tr>
-        <td>Image</td>
-        <td><?php echo $image ? "<img src='uploads/{$image}' style='width:300px;' />" : "No image found.";  ?></td>
+        <td>Waist</td>
+        <td></td>
     </tr>
     <tr>
-        <td><a href='updateMeasure.php' class='btn btn-success'>Edit Measurements</a></td>
+        <td>Hips</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Sleeve</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><?php echo "<a href='updateMeasure.php?id={$id}' class='btn btn-primary m-r-1em'>Edit</a>"; ?>
         <td>
             <a href='index.php' class='btn btn-danger'>Back to All Customers</a>
         </td>
